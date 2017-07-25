@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Automation test method</Title>
+      <Shortcut>testgv</Shortcut>
+      <Description>Inserts an automation test method.</Description>
+      <Author>Gustavo Viruega</Author>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>page</ID>
+          <ToolTip>Replace with the name of the page.</ToolTip>
+          <Default>PageName</Default>
+        </Literal>
+        <Literal>
+          <ID>testname</ID>
+          <ToolTip>Replace with the name of the test.</ToolTip>
+          <Default>TestName</Default>
+        </Literal>
+        <Literal>
+          <ID>priority</ID>
+          <ToolTip>Replace with the priority id (1-High, 2-Medium, 3-Low).</ToolTip>
+          <Default>1</Default>
+        </Literal>
+        <Literal>
+          <ID>testcaseid</ID>
+          <ToolTip>Replace with the test case ID from TestRail.</ToolTip>
+          <Default>TestRailID</Default>
+        </Literal>
+        <Literal>
+          <ID>expectedresult</ID>
+          <ToolTip>Replace with var name that contains the expected result.</ToolTip>
+          <Default>VarNameWithExpectedResult</Default>
+        </Literal>
+        <Literal>
+          <ID>actualresult</ID>
+          <ToolTip>Replace with the property of the page that returns the actual result.</ToolTip>
+          <Default>PagePropertyWithActualResult</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[        
+        [TestMethod]
+        [TestCategory("E2E")]
+        [TestProperty("Page", "$page$")]
+        [Priority($priority$)]
+        public void $page$_$testname$()
+        {
+            CurrentTestCaseId = $testcaseid$;
+
+            #region Arrange
+            var loginPage = Pages.Login;
+            #endregion
+
+            #region Act
+            Browser.GoToPage(loginPage);
+            loginPage.SingIn(userName, userPass);
+            #endregion
+
+            #region Assert
+            try
+            {
+                Assert.AreEqual($expectedresult$, $actualresult$);
+            }
+            catch (Exception ex)
+            {
+                AssertExceptionMessage = ex.Message;
+                throw;
+            }
+            #endregion
+        }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

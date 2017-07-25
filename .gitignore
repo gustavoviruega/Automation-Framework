@@ -1,0 +1,6 @@
+*.suo
+*.user
+**/*.csproj.FileListAbsolute.txt
+bin
+obj
+packages
