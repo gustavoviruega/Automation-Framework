@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
-namespace InfoTycoon.Test.Example._01.Login
+namespace InfoTycoon.Test._01.Login
 {
     [TestClass]
     public class LoginTest : SetupAssemblyInitializer
@@ -187,7 +187,7 @@ namespace InfoTycoon.Test.Example._01.Login
         {
             //LogTest(TestContext.CurrentTestOutcome, CurrentTestCaseId);
 
-            reportHelper.GenerateReport(TestContext, AssertExceptionMessage);
+            //reportHelper.GenerateReport(TestContext, AssertExceptionMessage);
 
             Browser.Quit();
         }     

@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.Configuration;
 using System.IO;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Interactions;
 using System.Collections.Generic;
 
 namespace InfoTycoon.Fwk.TestAutomation
@@ -59,16 +60,37 @@ namespace InfoTycoon.Fwk.TestAutomation
             webDriver.Navigate().GoToUrl(page.PageUrl);
         }
 
-        public static void PrintScreen(string fileName, ImageFormat imageFormat, string path = null)
+        public static void PrintScreen(string fileName, ScreenshotImage‌​Format ScreenshotImage‌​Format, string path = null)
         {
+            if (webDriver == null)
+                return;
+
             if (String.IsNullOrEmpty(path))
                 path = ConfigurationManager.AppSettings["DefaultImagePath"];
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            var file = path + fileName + "." + imageFormat.ToString();
+            var file = path + fileName + "." + ScreenshotImage‌​Format.ToString();
             Screenshot ss = ((ITakesScreenshot)webDriver).GetScreenshot();
-            ss.SaveAsFile(file, imageFormat);
+            ss.SaveAsFile(file, ScreenshotImage‌​Format);
+        }
+
+        public static void ScrollToElement(IWebElement element)
+        {
+            Actions actions = new Actions(webDriver);
+            actions.MoveToElement(element);
+            actions.Perform();
+        }
+
+        public static void ClosePendoModal(IWebElement element)
+        {
+            try
+            {
+                element.Click();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public static void Quit()
@@ -104,7 +126,7 @@ namespace InfoTycoon.Fwk.TestAutomation
         #region Waits
         public static void ImplicitlyWait(int seconds)
         {
-            webDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(seconds));
+            webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
         public static void ExplicitWait(int seconds, IWebElement element)
@@ -125,12 +147,28 @@ namespace InfoTycoon.Fwk.TestAutomation
             wait.Until((webDriver => element.Displayed));
         }
 
+        public static void ExplicitWaitNotDisplayed(int seconds, IWebElement element)
+        {
+            WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(seconds));
+            wait.Until((webDriver => !element.Displayed));
+        }
+
         public static void OverlayWait(int seconds)
         {
             WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(seconds));
             //Originally made with "ExpectedConditions.ElementExists"
             wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.CssSelector("#overlay[style='display: none;']")));
         }
+
+        //public static void OverlaySWait(int seconds)
+        //{
+        //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(seconds));
+        //    //Originally made with "ExpectedConditions.ElementExists"
+        //    wait.Until(
+        //        ExpectedConditions.PresenceOfAllElementsLocatedBy(By.CssSelector("#overlay[style='display: none;']"))
+        //        ExpectedConditions.PresenceOfAllElementsLocatedBy(By.CssSelector("#customOverlay[style='display: none;']"))
+        //        );
+        //}
 
         public static void AngularWait(int seconds)
         {
@@ -156,17 +194,16 @@ namespace InfoTycoon.Fwk.TestAutomation
                     callback('False');
                 }";
 
-            Driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(10));
+            Driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(10);
             wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteAsyncScript(hasAngularFinishedScript).Equals("True"));
         }
 
         public static void DocumentWait(int seconds)
         {
             WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(seconds));
-            Driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(10));
+            Driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(10);
             wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
         }
-
         #endregion
     }
 }

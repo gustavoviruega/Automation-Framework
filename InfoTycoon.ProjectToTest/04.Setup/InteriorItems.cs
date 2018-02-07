@@ -9,16 +9,16 @@ using System.Threading;
 
 namespace InfoTycoon.ProjectToTest
 {
-    public class GeneralItems : PageBase
+    public class InteriorItems : PageBase
     {
         static string propID = ConfigurationManager.AppSettings["AutomationPropertyID"];
-        public GeneralItems() : base("GENERAL ITEMS", "https://dev-my.infotycoon.com/#/property/" + propID + "/generalitems/")
+        public InteriorItems() : base("INTERIOR ITEMS", "https://dev-my.infotycoon.com/#/property/" + propID + "/interioritems/")
         {
         }
 
         #region Page Elements
 
-            #region Header
+        #region Header
             [FindsBy(How = How.PartialLinkText, Using = "Properties")]
             private IWebElement btnProperties;
 
@@ -38,27 +38,27 @@ namespace InfoTycoon.ProjectToTest
             private IWebElement btnReports;
             #endregion
 
-            #region Body
+        #region Body
             [FindsBy(How = How.PartialLinkText, Using = "Automation Property")]
-            private IWebElement breGeneralItems;
+            private IWebElement breInteriorItems;
 
             [FindsBy(How = How.CssSelector, Using = "h3.content-header")]
-            private IWebElement headGeneralItems;
+            private IWebElement headInteriorItems;
 
             [FindsBy(How = How.CssSelector, Using = "ul#collapseSidemenu a.active")]
             private IWebElement btnSideMenuActive;
 
             [FindsBy(How = How.CssSelector, Using = ".page.container input[type='text']")]
-            private IWebElement txtSearchGeneralItem;
+            private IWebElement txtSearchInteriorItem;
 
             [FindsBy(How = How.CssSelector, Using = ".page.container .input-group-btn")]
-            private IWebElement btnSearchGeneralItem;
+            private IWebElement btnSearchInteriorItem;
 
             [FindsBy(How = How.TagName, Using = "tbody")]
-            private IWebElement gridGeneralItems;
+            private IWebElement gridInteriorItems;
 
             [FindsBy(How = How.CssSelector, Using = "tbody > tr")]
-            private IList<IWebElement> gridGeneralItemsRows;
+            private IList<IWebElement> gridInteriorItemsRows;
 
             [FindsBy(How = How.LinkText, Using = "Create New")]
             private IWebElement btnCreateNew;
@@ -89,17 +89,17 @@ namespace InfoTycoon.ProjectToTest
 
         #region Methods
 
-        public void SearchGeneralItem(string generalItem)
+        public void SearchInteriorItem(string interiorItem)
         {
             WaitForOverlay();
-            WaitForElement(txtSearchGeneralItem);
-            txtSearchGeneralItem.SendKeys(generalItem);
+            WaitForElement(txtSearchInteriorItem);
+            txtSearchInteriorItem.SendKeys(interiorItem);
             WaitForOverlay();
             WaitForAngular();
             WaitForOverlay();
-            btnSearchGeneralItem.Click();
-            WaitForOverlay();
-            WaitForAngular();
+            //btnSearchInteriorItem.Click();
+            //WaitForOverlay();
+            //WaitForAngular();
         }
 
         public void ClickCreateNew()
@@ -173,8 +173,8 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                return headGeneralItems.Text;
+                WaitForElement(headInteriorItems);
+                return headInteriorItems.Text;
             }
         }
 
@@ -183,8 +183,8 @@ namespace InfoTycoon.ProjectToTest
             get
             {
                 WaitForOverlay();
-                WaitForElement(breGeneralItems);
-                return breGeneralItems.Text;
+                WaitForElement(breInteriorItems);
+                return breInteriorItems.Text;
             }
         }
 
@@ -192,8 +192,8 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                if (btnSideMenuActive.Text.Trim() == "GENERAL ITEMS")
+                WaitForElement(headInteriorItems);
+                if (btnSideMenuActive.Text.Trim() == "INTERIOR ITEMS")
                 {
                     return true;
                 }
@@ -234,7 +234,7 @@ namespace InfoTycoon.ProjectToTest
             {
                 WaitForOverlay();
                 WaitForAngular();
-                return gridGeneralItemsRows.Count;
+                return gridInteriorItemsRows.Count;
             }
         }
 
@@ -245,7 +245,7 @@ namespace InfoTycoon.ProjectToTest
                 WaitForOverlay();
                 WaitForAngular();
                 WaitForDocument();
-                WaitFor1RowOnly(gridGeneralItemsRows);
+                WaitFor1RowOnly(gridInteriorItemsRows);
 
                 #region Evaluate text is present on first row
                 int count = 0;
@@ -254,7 +254,7 @@ namespace InfoTycoon.ProjectToTest
                 {
                     try
                     {
-                        elementText = gridGeneralItemsRows[0].Text;
+                        elementText = gridInteriorItemsRows[0].Text;
                         break;
                     }
                     catch (StaleElementReferenceException)

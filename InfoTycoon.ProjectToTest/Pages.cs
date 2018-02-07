@@ -22,6 +22,14 @@ namespace InfoTycoon.ProjectToTest
             }
         }
 
+        public static CreateCompany CreateCompany
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<CreateCompany>();
+            }
+        }
+
         public static Properties Properties
         {
             get
@@ -67,6 +75,62 @@ namespace InfoTycoon.ProjectToTest
             get
             {
                 return PageFactoryHelper.InitElements<CreateGeneralItems>();
+            }
+        }
+
+        public static InteriorItems InteriorItems
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<InteriorItems>();
+            }
+        }
+
+        public static CreateInteriorItems CreateInteriorItems
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<CreateInteriorItems>();
+            }
+        }
+
+        public static ExteriorItems ExteriorItems
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<ExteriorItems>();
+            }
+        }
+
+        public static CreateExteriorItems CreateExteriorItems
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<CreateExteriorItems>();
+            }
+        }
+
+        public static GeneralCategories GeneralCategories
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<GeneralCategories>();
+            }
+        }
+
+        public static CreateGeneralCategory CreateGeneralCategory
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<CreateGeneralCategory>();
+            }
+        }
+
+        public static GeneralCategoryInfo GeneralCategoryInfo
+        {
+            get
+            {
+                return PageFactoryHelper.InitElements<GeneralCategoryInfo>();
             }
         }
     }

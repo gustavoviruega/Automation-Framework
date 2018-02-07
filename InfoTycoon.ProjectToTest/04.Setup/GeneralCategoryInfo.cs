@@ -9,10 +9,10 @@ using System.Threading;
 
 namespace InfoTycoon.ProjectToTest
 {
-    public class GeneralItems : PageBase
+    public class GeneralCategoryInfo : PageBase
     {
         static string propID = ConfigurationManager.AppSettings["AutomationPropertyID"];
-        public GeneralItems() : base("GENERAL ITEMS", "https://dev-my.infotycoon.com/#/property/" + propID + "/generalitems/")
+        public GeneralCategoryInfo() : base("GENERAL CATEGORY INFO", "https://dev-my.infotycoon.com/#/property/" + propID + "/generalcategories/24772/")
         {
         }
 
@@ -40,73 +40,65 @@ namespace InfoTycoon.ProjectToTest
 
             #region Body
             [FindsBy(How = How.PartialLinkText, Using = "Automation Property")]
-            private IWebElement breGeneralItems;
+            private IWebElement breGeneralCategoryInfo;
 
             [FindsBy(How = How.CssSelector, Using = "h3.content-header")]
-            private IWebElement headGeneralItems;
+            private IWebElement headGeneralCategoryInfo;
 
             [FindsBy(How = How.CssSelector, Using = "ul#collapseSidemenu a.active")]
             private IWebElement btnSideMenuActive;
 
-            [FindsBy(How = How.CssSelector, Using = ".page.container input[type='text']")]
-            private IWebElement txtSearchGeneralItem;
+            [FindsBy(How = How.CssSelector, Using = "form > div:nth-of-type(2) > p")]
+            private IWebElement lblName;
 
-            [FindsBy(How = How.CssSelector, Using = ".page.container .input-group-btn")]
-            private IWebElement btnSearchGeneralItem;
+            [FindsBy(How = How.LinkText, Using = "Back")]
+            private IWebElement btnBack;
 
-            [FindsBy(How = How.TagName, Using = "tbody")]
-            private IWebElement gridGeneralItems;
+            [FindsBy(How = How.CssSelector, Using = "div[class='alert alert-info'] > button")]
+            private IWebElement btnAddGeneralItems;
 
-            [FindsBy(How = How.CssSelector, Using = "tbody > tr")]
-            private IList<IWebElement> gridGeneralItemsRows;
+            //[FindsBy(How = How.XPath, Using = "//td[contains(text(),'New AV')]")]
+            //private IWebElement rowCreatedAVExteriorItem;
 
-            [FindsBy(How = How.LinkText, Using = "Create New")]
-            private IWebElement btnCreateNew;
+            //[FindsBy(How = How.TagName, Using = "tbody")]
+            //private IWebElement gridGeneralItems;
 
-            [FindsBy(How = How.LinkText, Using = "Clone")]
-            private IWebElement btnClone;
+            //[FindsBy(How = How.CssSelector, Using = "tbody > tr")]
+            //private IList<IWebElement> gridGeneralCategoriesRows;
 
-            [FindsBy(How = How.LinkText, Using = "Apply to Categories")]
-            private IWebElement btnApplyToCategories;
+            //[FindsBy(How = How.CssSelector, Using = "td:nth-of-type(1)")]
+            //private IWebElement rowSearchResult;
+
+            [FindsBy(How = How.CssSelector, Using = "tbody > tr:first-of-type > td:first-of-type")]
+            private IWebElement rowFirstRowFirstCell;
+
+            [FindsBy(How = How.CssSelector, Using = "#items_table > table > thead")]
+            private IWebElement tblItems;
 
             [FindsBy(How = How.ClassName, Using = "toast-title")]
             private IWebElement toastTitle;
 
             [FindsBy(How = How.ClassName, Using = "toast-message")]
-            private IWebElement toastMessage;
-
-            [FindsBy(How = How.XPath, Using = "//td[contains(text(),'New AV')]")]
-            private IWebElement rowCreatedAVGeneralItem;
-
-            [FindsBy(How = How.CssSelector, Using = "td:nth-of-type(1)")]
-            private IWebElement rowSearchResult;
-
-            [FindsBy(How = How.CssSelector, Using = "tr:first-of-type > td:first-of-type")]
-            private IWebElement rowFirstRowFirstCell;        
+            private IWebElement toastMessage;     
         #endregion
 
         #endregion
 
         #region Methods
-
-        public void SearchGeneralItem(string generalItem)
+        public void ClickBack()
         {
             WaitForOverlay();
-            WaitForElement(txtSearchGeneralItem);
-            txtSearchGeneralItem.SendKeys(generalItem);
-            WaitForOverlay();
             WaitForAngular();
-            WaitForOverlay();
-            btnSearchGeneralItem.Click();
-            WaitForOverlay();
-            WaitForAngular();
+            WaitForElement(rowFirstRowFirstCell);
+            WaitForElement(btnBack);
+            btnBack.Click();
         }
 
-        public void ClickCreateNew()
+        public void ClickAddGeneralItems()
         {
             WaitForOverlay();
-            WaitForElement(btnCreateNew);
-            btnCreateNew.Click();
+            WaitForElement(btnAddGeneralItems);
+            btnAddGeneralItems.Click();
         }
 
         #endregion
@@ -173,8 +165,8 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                return headGeneralItems.Text;
+                WaitForElement(headGeneralCategoryInfo);
+                return headGeneralCategoryInfo.Text;
             }
         }
 
@@ -183,8 +175,8 @@ namespace InfoTycoon.ProjectToTest
             get
             {
                 WaitForOverlay();
-                WaitForElement(breGeneralItems);
-                return breGeneralItems.Text;
+                WaitForElement(breGeneralCategoryInfo);
+                return breGeneralCategoryInfo.Text;
             }
         }
 
@@ -192,8 +184,8 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                if (btnSideMenuActive.Text.Trim() == "GENERAL ITEMS")
+                WaitForElement(headGeneralCategoryInfo);
+                if (btnSideMenuActive.Text.Trim() == "GENERAL CATEGORIES")
                 {
                     return true;
                 }
@@ -201,74 +193,44 @@ namespace InfoTycoon.ProjectToTest
             }
         }
 
-        public IWebElement CreateNewButton
-        {
-            get
-            {
-                WaitForElement(btnCreateNew);
-                return btnCreateNew;
-            }
-        }
-
-        public IWebElement CloneButton
-        {
-            get
-            {
-                WaitForElement(btnClone);
-                return btnClone;
-            }
-        }
-
-        public IWebElement ApplyToCategoriesButton
-        {
-            get
-            {
-                WaitForElement(btnApplyToCategories);
-                return btnApplyToCategories;
-            }
-        }
-
-        public int GridRowsCount
-        { 
-            get
-            {
-                WaitForOverlay();
-                WaitForAngular();
-                return gridGeneralItemsRows.Count;
-            }
-        }
-
-        public string SearchResult
+        public string CategoryName
         {
             get
             {
                 WaitForOverlay();
-                WaitForAngular();
-                WaitForDocument();
-                WaitFor1RowOnly(gridGeneralItemsRows);
-
-                #region Evaluate text is present on first row
-                int count = 0;
-                string elementText = null;
-                while (count < 5)
-                {
-                    try
-                    {
-                        elementText = gridGeneralItemsRows[0].Text;
-                        break;
-                    }
-                    catch (StaleElementReferenceException)
-                    {
-                        count = count + 1;
-                    }
-                }
-                #endregion
-
-                //returns the name of the item
-                string returnedText = elementText.Substring(0, elementText.IndexOf(" "));
-                return returnedText;
+                WaitForElementNotDisplayed(tblItems);
+                WaitForElement(lblName);
+                return lblName.Text;
             }
         }
+
+        public IWebElement BackButton
+        {
+            get
+            {
+                WaitForElement(btnBack);
+                return btnBack;
+            }
+        }
+
+        public IWebElement AddGeneralItemsButton
+        {
+            get
+            {
+                WaitForElement(btnAddGeneralItems);
+                return btnAddGeneralItems;
+            }
+        }
+
+        //public int GridRowsCount
+        //{ 
+        //    get
+        //    {
+        //        WaitForOverlay();
+        //        WaitForAngular();
+        //        return gridGeneralCategoriesRows.Count;
+        //    }
+        //}
 
         public string ToastTitle
         {

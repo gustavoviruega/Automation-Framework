@@ -1,16 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2834DDBB-6E2C-464D-9364-FD6D5C4AF83E}</ProjectGuid>
+    <ProjectGuid>{2D12C2FA-E1B8-4AC7-B91B-C83AF1A98962}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InfoTycoon.ProjectToTest</RootNamespace>
-    <AssemblyName>InfoTycoon.ProjectToTest</AssemblyName>
+    <RootNamespace>InfoTycoon.Test.Example</RootNamespace>
+    <AssemblyName>InfoTycoon.Test.Example</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -34,9 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
@@ -48,18 +53,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="TechTalk.SpecFlow, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.2.1.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
@@ -73,39 +73,71 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
-    <Compile Include="01.Login\Login.cs" />
-    <Compile Include="02.Companies\CreateCompany.cs" />
-    <Compile Include="02.Companies\Companies.cs" />
-    <Compile Include="03.Properties\CreateProperty.cs" />
-    <Compile Include="03.Properties\Properties.cs" />
-    <Compile Include="03.Properties\PropertyActivity.cs" />
-    <Compile Include="04.Setup\CreateExteriorItems.cs" />
-    <Compile Include="04.Setup\CreateGeneralCategory.cs" />
-    <Compile Include="04.Setup\CreateInteriorItems.cs" />
-    <Compile Include="04.Setup\CreateGeneralItems.cs" />
-    <Compile Include="04.Setup\ExteriorItems.cs" />
-    <Compile Include="04.Setup\GeneralCategoryInfo.cs" />
-    <Compile Include="04.Setup\GeneralCategories.cs" />
-    <Compile Include="04.Setup\InteriorItems.cs" />
-    <Compile Include="04.Setup\GeneralItems.cs" />
-    <Compile Include="04.Setup\PropertyDetails.cs" />
-    <Compile Include="Pages.cs" />
+    <Compile Include="01.Login\LoginTest.cs" />
+    <Compile Include="02.Companies\CompaniesTest.cs" />
+    <Compile Include="03.Properties\PropertiesTest.cs" />
+    <Compile Include="04.Setup\SetupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetupAssemblyInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InfoTycoon.Fwk.TestAutomation\InfoTycoon.Fwk.TestAutomation.csproj">
       <Project>{c0496855-809f-45cc-a5a7-0f5f7c2a9469}</Project>
       <Name>InfoTycoon.Fwk.TestAutomation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InfoTycoon.ProjectToTest\InfoTycoon.ProjectToTest.csproj">
+      <Project>{2834ddbb-6e2c-464d-9364-fd6d5c4af83e}</Project>
+      <Name>InfoTycoon.ProjectToTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\testrail-api\Gurock.TestRail.csproj">
+      <Project>{2162e7ee-ed4c-4c41-8e21-66976ab11d1a}</Project>
+      <Name>Gurock.TestRail</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\InfoTycoon.Test\App.config">
-      <Link>App.config</Link>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

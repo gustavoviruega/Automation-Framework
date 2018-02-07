@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using System.Globalization;
 using System.Drawing.Imaging;
+using OpenQA.Selenium;
 
 namespace InfoTycoon.Fwk.TestAutomation.Helpers
 {
@@ -29,7 +30,7 @@ namespace InfoTycoon.Fwk.TestAutomation.Helpers
 
         protected ExtentTest test;
 
-        public void GenerateReport(TestContext testContext, string assertExceptionMessage = null)
+        public void GenerateReport(TestContext testContext, string assertExceptionMessage = null, string extendedMessage = null)
         {
             var status = testContext.CurrentTestOutcome;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("es-ES");
@@ -54,17 +55,29 @@ namespace InfoTycoon.Fwk.TestAutomation.Helpers
             test.AssignCategory(testClassName);
 
             var fileName = String.Format("Test_{0}_{1}", testContext.TestName, DateTime.Now.ToString("yyyyMMdd_HHmm"));
-            Browser.PrintScreen(fileName, ImageFormat.Jpeg);
-            var fileToAdd = ConfigurationManager.AppSettings["DefaultImagePath"] + fileName + "." + ImageFormat.Jpeg;
+            Browser.PrintScreen(fileName, ScreenshotImage‌​Format.Jpeg);
+            var fileToAdd = ConfigurationManager.AppSettings["DefaultImagePath"] + fileName + "." + ScreenshotImage‌​Format.Jpeg;
+
+
+            StringBuilder details = new StringBuilder();
+            details.AppendFormat("<b>Test status:</b> {0}", logstatus);
+            details.AppendLine("</br>");
+            details.AppendFormat("<b>Snapshot: </b> {0}", test.AddScreenCapture(fileToAdd));
+            details.AppendLine("</br>");
 
             if (logstatus.ToString() == "Fail")
             {
-                test.Log(logstatus, "<b>Test status:</b> " + logstatus + "</br>" + "<b>Snapshot: </b>" + test.AddScreenCapture(fileToAdd) + "</br>" + "<b>Error info: </b>" + "</br>" + assertExceptionMessage.Replace("<", "[").Replace(">", "]"));
+                string assertExMsg = (assertExceptionMessage != null) ? assertExceptionMessage : String.Empty;
+                details.AppendFormat("<b>Error info: </b>" + "</br>" + assertExMsg.Replace("<", "[").Replace(">", "]"));
+                details.AppendLine("</br>");
             }
-            else
-            { 
-                test.Log(logstatus, "<b>Test status:</b> " + logstatus + "</br>" + "<b>Snapshot: </b>" + test.AddScreenCapture(fileToAdd));
-            }
+
+
+            extendedMessage = (extendedMessage != null) ? extendedMessage + "</br>" : String.Empty;
+            details.Append(extendedMessage);
+
+            test.Log(logstatus, details.ToString());
+
 
             ExtentReport.EndTest(test);
             ExtentReport.Flush();

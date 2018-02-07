@@ -9,16 +9,16 @@ using System.Threading;
 
 namespace InfoTycoon.ProjectToTest
 {
-    public class GeneralItems : PageBase
+    public class ExteriorItems : PageBase
     {
         static string propID = ConfigurationManager.AppSettings["AutomationPropertyID"];
-        public GeneralItems() : base("GENERAL ITEMS", "https://dev-my.infotycoon.com/#/property/" + propID + "/generalitems/")
+        public ExteriorItems() : base("EXTERIOR ITEMS", "https://dev-my.infotycoon.com/#/property/" + propID + "/exterioritems/")
         {
         }
 
         #region Page Elements
 
-            #region Header
+        #region Header
             [FindsBy(How = How.PartialLinkText, Using = "Properties")]
             private IWebElement btnProperties;
 
@@ -38,27 +38,27 @@ namespace InfoTycoon.ProjectToTest
             private IWebElement btnReports;
             #endregion
 
-            #region Body
+        #region Body
             [FindsBy(How = How.PartialLinkText, Using = "Automation Property")]
-            private IWebElement breGeneralItems;
+            private IWebElement breExteriorItems;
 
             [FindsBy(How = How.CssSelector, Using = "h3.content-header")]
-            private IWebElement headGeneralItems;
+            private IWebElement headExteriorItems;
 
             [FindsBy(How = How.CssSelector, Using = "ul#collapseSidemenu a.active")]
             private IWebElement btnSideMenuActive;
 
             [FindsBy(How = How.CssSelector, Using = ".page.container input[type='text']")]
-            private IWebElement txtSearchGeneralItem;
+            private IWebElement txtSearchExteriorItem;
 
             [FindsBy(How = How.CssSelector, Using = ".page.container .input-group-btn")]
-            private IWebElement btnSearchGeneralItem;
+            private IWebElement btnSearchExteriorItem;
 
             [FindsBy(How = How.TagName, Using = "tbody")]
-            private IWebElement gridGeneralItems;
+            private IWebElement gridExteriorItems;
 
             [FindsBy(How = How.CssSelector, Using = "tbody > tr")]
-            private IList<IWebElement> gridGeneralItemsRows;
+            private IList<IWebElement> gridExteriorItemsRows;
 
             [FindsBy(How = How.LinkText, Using = "Create New")]
             private IWebElement btnCreateNew;
@@ -76,7 +76,7 @@ namespace InfoTycoon.ProjectToTest
             private IWebElement toastMessage;
 
             [FindsBy(How = How.XPath, Using = "//td[contains(text(),'New AV')]")]
-            private IWebElement rowCreatedAVGeneralItem;
+            private IWebElement rowCreatedAVExteriorItem;
 
             [FindsBy(How = How.CssSelector, Using = "td:nth-of-type(1)")]
             private IWebElement rowSearchResult;
@@ -89,15 +89,15 @@ namespace InfoTycoon.ProjectToTest
 
         #region Methods
 
-        public void SearchGeneralItem(string generalItem)
+        public void SearchExteriorItem(string exteriorItem)
         {
             WaitForOverlay();
-            WaitForElement(txtSearchGeneralItem);
-            txtSearchGeneralItem.SendKeys(generalItem);
+            WaitForElement(txtSearchExteriorItem);
+            txtSearchExteriorItem.SendKeys(exteriorItem);
             WaitForOverlay();
             WaitForAngular();
             WaitForOverlay();
-            btnSearchGeneralItem.Click();
+            btnSearchExteriorItem.Click();
             WaitForOverlay();
             WaitForAngular();
         }
@@ -123,58 +123,58 @@ namespace InfoTycoon.ProjectToTest
                     }
                 }
 
-                public IWebElement ActivityButton
-                {
-                    get
-                    {
-                        WaitForElement(btnActivity);
-                        return btnActivity;
-                    }
-                }
+		public IWebElement ActivityButton
+		{
+			get
+			{
+				WaitForElement(btnActivity);
+				return btnActivity;
+			}
+		}
 
-                public IWebElement InspectionsButton
-                {
-                    get
-                    {
-                        WaitForElement(btnInspections);
-                        return btnInspections;
-                    }
-                }
+		public IWebElement InspectionsButton
+		{
+			get
+			{
+				WaitForElement(btnInspections);
+				return btnInspections;
+			}
+		}
 
-                public IWebElement LFAButton
-                {
-                    get
-                    {
-                        WaitForElement(btnLFA);
-                        return btnLFA;
-                    }
-                }
+		public IWebElement LFAButton
+		{
+			get
+			{
+				WaitForElement(btnLFA);
+				return btnLFA;
+			}
+		}
 
-                public IWebElement SetupButton
-                {
-                    get
-                    {
-                        WaitForElement(btnSetup);
-                        return btnSetup;
-                    }
-                }
+		public IWebElement SetupButton
+		{
+			get
+			{
+				WaitForElement(btnSetup);
+				return btnSetup;
+			}
+		}
 
-                public IWebElement ReportsButton
-                {
-                    get
-                    {
-                        WaitForElement(btnReports);
-                        return btnReports;
-                    }
-                } 
+		public IWebElement ReportsButton
+		{
+			get
+			{
+				WaitForElement(btnReports);
+				return btnReports;
+			}
+		} 
                 #endregion
 
         public string PageHeader
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                return headGeneralItems.Text;
+                WaitForElement(headExteriorItems);
+                return headExteriorItems.Text;
             }
         }
 
@@ -183,8 +183,8 @@ namespace InfoTycoon.ProjectToTest
             get
             {
                 WaitForOverlay();
-                WaitForElement(breGeneralItems);
-                return breGeneralItems.Text;
+                WaitForElement(breExteriorItems);
+                return breExteriorItems.Text;
             }
         }
 
@@ -192,8 +192,8 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                if (btnSideMenuActive.Text.Trim() == "GENERAL ITEMS")
+                WaitForElement(headExteriorItems);
+                if (btnSideMenuActive.Text.Trim() == "EXTERIOR ITEMS")
                 {
                     return true;
                 }
@@ -234,7 +234,7 @@ namespace InfoTycoon.ProjectToTest
             {
                 WaitForOverlay();
                 WaitForAngular();
-                return gridGeneralItemsRows.Count;
+                return gridExteriorItemsRows.Count;
             }
         }
 
@@ -245,7 +245,7 @@ namespace InfoTycoon.ProjectToTest
                 WaitForOverlay();
                 WaitForAngular();
                 WaitForDocument();
-                WaitFor1RowOnly(gridGeneralItemsRows);
+                WaitFor1RowOnly(gridExteriorItemsRows);
 
                 #region Evaluate text is present on first row
                 int count = 0;
@@ -254,7 +254,7 @@ namespace InfoTycoon.ProjectToTest
                 {
                     try
                     {
-                        elementText = gridGeneralItemsRows[0].Text;
+                        elementText = gridExteriorItemsRows[0].Text;
                         break;
                     }
                     catch (StaleElementReferenceException)

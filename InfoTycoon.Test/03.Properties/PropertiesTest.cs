@@ -6,7 +6,7 @@ using System.Threading;
 using System.Configuration;
 using InfoTycoon.Fwk.TestAutomation.Helpers;
 
-namespace InfoTycoon.Test.Example._03.Properties
+namespace InfoTycoon.Test._03.Properties
 {
     [TestClass]
     public class PropertiesTest : SetupAssemblyInitializer

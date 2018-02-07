@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Threading;
 using System.Collections.Generic;
@@ -17,7 +18,25 @@ namespace InfoTycoon.Fwk.TestAutomation
 
         #region Properties
         public string Title { get; private set; }
-        public string PageUrl { get; private set; } 
+        public string PageUrl { get; private set; }
+        #endregion
+
+        #region Methods
+        [FindsBy(How = How.CssSelector, Using = "#_pendo-close-guide_")]
+        private IWebElement btnClosePendo;
+
+        [FindsBy(How = How.CssSelector, Using = "footer")]
+        private IWebElement footer;
+
+        public void ClosePendoModal()
+        {
+            Browser.ClosePendoModal(btnClosePendo);
+        }
+
+        protected void ScrollToFooter()
+        {
+            Browser.ScrollToElement(footer);
+        }
         #endregion
 
         #region Waits
@@ -58,6 +77,16 @@ namespace InfoTycoon.Fwk.TestAutomation
         protected void WaitForElementDisplayed(IWebElement element, int seconds = 10)
         {
             Browser.ExplicitWaitDisplayed(seconds, element);
+        }
+
+        /// <summary>
+        /// Waits for an element on the current page to not be displayed
+        /// </summary>
+        /// <param name="element">Web element expected</param>
+        /// <param name="seconds">Wait interval in seconds, 10 seconds by default</param>
+        protected void WaitForElementNotDisplayed(IWebElement element, int seconds = 10)
+        {
+            Browser.ExplicitWaitNotDisplayed(seconds, element);
         }
 
         /// <summary>

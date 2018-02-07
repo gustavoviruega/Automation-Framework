@@ -25,7 +25,7 @@ namespace InfoTycoon.Fwk.TestAutomation.Helpers
                 case "Edge":
                     return new EdgeDriver(path);
                 default:
-                    throw new Exception("El driver no existe. Ingrese uno de los siguientes: FireFox, IExplorer, Chrome");
+                    throw new Exception("The driver doesn't exist. Current drivers allowed: Chrome");
             }
         }
     }

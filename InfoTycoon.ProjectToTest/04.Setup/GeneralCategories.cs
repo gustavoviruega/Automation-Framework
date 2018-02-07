@@ -9,10 +9,10 @@ using System.Threading;
 
 namespace InfoTycoon.ProjectToTest
 {
-    public class GeneralItems : PageBase
+    public class GeneralCategories : PageBase
     {
         static string propID = ConfigurationManager.AppSettings["AutomationPropertyID"];
-        public GeneralItems() : base("GENERAL ITEMS", "https://dev-my.infotycoon.com/#/property/" + propID + "/generalitems/")
+        public GeneralCategories() : base("GENERAL CATEGORIES", "https://dev-my.infotycoon.com/#/property/" + propID + "/generalcategories/")
         {
         }
 
@@ -40,25 +40,25 @@ namespace InfoTycoon.ProjectToTest
 
             #region Body
             [FindsBy(How = How.PartialLinkText, Using = "Automation Property")]
-            private IWebElement breGeneralItems;
+            private IWebElement breGeneralCategories;
 
             [FindsBy(How = How.CssSelector, Using = "h3.content-header")]
-            private IWebElement headGeneralItems;
+            private IWebElement headGeneralCategories;
 
             [FindsBy(How = How.CssSelector, Using = "ul#collapseSidemenu a.active")]
             private IWebElement btnSideMenuActive;
 
             [FindsBy(How = How.CssSelector, Using = ".page.container input[type='text']")]
-            private IWebElement txtSearchGeneralItem;
+            private IWebElement txtSearchGeneralCategory;
 
             [FindsBy(How = How.CssSelector, Using = ".page.container .input-group-btn")]
-            private IWebElement btnSearchGeneralItem;
+            private IWebElement btnSearchGeneralCategory;
 
             [FindsBy(How = How.TagName, Using = "tbody")]
-            private IWebElement gridGeneralItems;
+            private IWebElement gridGeneralCategories;
 
             [FindsBy(How = How.CssSelector, Using = "tbody > tr")]
-            private IList<IWebElement> gridGeneralItemsRows;
+            private IList<IWebElement> gridGeneralCategoriesRows;
 
             [FindsBy(How = How.LinkText, Using = "Create New")]
             private IWebElement btnCreateNew;
@@ -66,17 +66,17 @@ namespace InfoTycoon.ProjectToTest
             [FindsBy(How = How.LinkText, Using = "Clone")]
             private IWebElement btnClone;
 
-            [FindsBy(How = How.LinkText, Using = "Apply to Categories")]
-            private IWebElement btnApplyToCategories;
-
             [FindsBy(How = How.ClassName, Using = "toast-title")]
             private IWebElement toastTitle;
 
             [FindsBy(How = How.ClassName, Using = "toast-message")]
             private IWebElement toastMessage;
 
-            [FindsBy(How = How.XPath, Using = "//td[contains(text(),'New AV')]")]
-            private IWebElement rowCreatedAVGeneralItem;
+            [FindsBy(How = How.XPath, Using = "//td[contains(text(),'Gustavo')]")]
+            private IWebElement rowCreatedGeneralCategory;
+
+            [FindsBy(How = How.XPath, Using = "//td[contains(text(),'Automation')]")]
+            private IWebElement rowTestingGeneralCategory;
 
             [FindsBy(How = How.CssSelector, Using = "td:nth-of-type(1)")]
             private IWebElement rowSearchResult;
@@ -89,17 +89,36 @@ namespace InfoTycoon.ProjectToTest
 
         #region Methods
 
-        public void SearchGeneralItem(string generalItem)
+        public void SearchGeneralCategory(string generalCategory)
         {
             WaitForOverlay();
-            WaitForElement(txtSearchGeneralItem);
-            txtSearchGeneralItem.SendKeys(generalItem);
+            WaitForElement(txtSearchGeneralCategory);
+            txtSearchGeneralCategory.SendKeys(generalCategory);
             WaitForOverlay();
             WaitForAngular();
             WaitForOverlay();
-            btnSearchGeneralItem.Click();
+            btnSearchGeneralCategory.Click();
             WaitForOverlay();
             WaitForAngular();
+        }
+
+        public void SelectGeneralCategory(string generalCategory)
+        {
+            WaitForElement(btnProperties);
+            WaitForOverlay();
+            WaitForAngular();
+            if (generalCategory.Contains("Automation"))
+            {
+                WaitForElement(rowTestingGeneralCategory);
+                WaitForOverlay();
+                rowTestingGeneralCategory.Click();
+            }
+            else
+            {
+                WaitForElement(rowCreatedGeneralCategory);
+                WaitForOverlay();
+                rowCreatedGeneralCategory.Click();
+            }
         }
 
         public void ClickCreateNew()
@@ -173,8 +192,9 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                return headGeneralItems.Text;
+                WaitForElement(btnCreateNew);
+                WaitForElement(headGeneralCategories);
+                return headGeneralCategories.Text;
             }
         }
 
@@ -183,8 +203,8 @@ namespace InfoTycoon.ProjectToTest
             get
             {
                 WaitForOverlay();
-                WaitForElement(breGeneralItems);
-                return breGeneralItems.Text;
+                WaitForElement(breGeneralCategories);
+                return breGeneralCategories.Text;
             }
         }
 
@@ -192,8 +212,8 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(headGeneralItems);
-                if (btnSideMenuActive.Text.Trim() == "GENERAL ITEMS")
+                WaitForElement(headGeneralCategories);
+                if (btnSideMenuActive.Text.Trim() == "GENERAL CATEGORIES")
                 {
                     return true;
                 }
@@ -219,22 +239,13 @@ namespace InfoTycoon.ProjectToTest
             }
         }
 
-        public IWebElement ApplyToCategoriesButton
-        {
-            get
-            {
-                WaitForElement(btnApplyToCategories);
-                return btnApplyToCategories;
-            }
-        }
-
         public int GridRowsCount
         { 
             get
             {
                 WaitForOverlay();
                 WaitForAngular();
-                return gridGeneralItemsRows.Count;
+                return gridGeneralCategoriesRows.Count;
             }
         }
 
@@ -245,7 +256,7 @@ namespace InfoTycoon.ProjectToTest
                 WaitForOverlay();
                 WaitForAngular();
                 WaitForDocument();
-                WaitFor1RowOnly(gridGeneralItemsRows);
+                WaitFor1RowOnly(gridGeneralCategoriesRows);
 
                 #region Evaluate text is present on first row
                 int count = 0;
@@ -254,7 +265,7 @@ namespace InfoTycoon.ProjectToTest
                 {
                     try
                     {
-                        elementText = gridGeneralItemsRows[0].Text;
+                        elementText = gridGeneralCategoriesRows[0].Text;
                         break;
                     }
                     catch (StaleElementReferenceException)

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Configuration;
 using InfoTycoon.Fwk.TestAutomation.Helpers;
 
-namespace InfoTycoon.Test.Example._02.Companies
+namespace InfoTycoon.Test._02.Companies
 {
     [TestClass]
     public class CompaniesTest : SetupAssemblyInitializer
@@ -81,7 +81,7 @@ namespace InfoTycoon.Test.Example._02.Companies
                 Assert.IsNotNull(companiesPage.CompaniesButton);
                 Assert.IsNotNull(companiesPage.UsersButton);
                 Assert.IsNotNull(companiesPage.AdminButton);
-                Assert.AreEqual(companiesPage.Title, companiesPage.PageHeader);
+                Assert.AreEqual(companiesPage.Title, companiesPage.Header);
                 Assert.IsNotNull(companiesPage.CreateButton);
                 Assert.IsNotNull(companiesPage.SearchCompanyField);
                 Assert.AreEqual(createNewButtonLabel, companiesPage.CreateNewButtonName);
@@ -137,6 +137,7 @@ namespace InfoTycoon.Test.Example._02.Companies
             #region Arrange
             var loginPage = Pages.Login;
             var companiesPage = Pages.Companies;
+            var createCompanyPage = Pages.CreateCompany;
             #endregion
 
             #region Act
@@ -148,10 +149,10 @@ namespace InfoTycoon.Test.Example._02.Companies
             #region Assert
             try
             {
-                Assert.AreEqual(createNewCompanyHeader, companiesPage.CreateNewCompanyHeader);
-                Assert.IsNotNull(companiesPage.CompanyTypeCombo);
-                Assert.IsNotNull(companiesPage.CompanyNameField);
-                Assert.IsFalse(companiesPage.SaveButtonEnabled);
+                Assert.AreEqual(createCompanyPage.Title, createCompanyPage.Header);
+                Assert.IsNotNull(createCompanyPage.CompanyTypeCombo);
+                Assert.IsNotNull(createCompanyPage.CompanyNameField);
+                Assert.IsFalse(createCompanyPage.SaveButtonEnabled);
             }
             catch (Exception ex)
             {
@@ -172,21 +173,22 @@ namespace InfoTycoon.Test.Example._02.Companies
             #region Arrange
             var loginPage = Pages.Login;
             var companiesPage = Pages.Companies;
+            var createCompanyPage = Pages.CreateCompany;
             #endregion
 
             #region Act
             Browser.GoToPage(loginPage);
             loginPage.SingIn(userName, userPass);
             companiesPage.ClickCreateNewButton();
-            companiesPage.SelectLeaseFileAuditCheck();
+            createCompanyPage.SelectLeaseFileAuditCheck();
             #endregion
 
             #region Assert
             try
             {
-                Assert.AreEqual(companyTypeMsg, companiesPage.CompanyTypeMsg);
-                Assert.AreEqual(companyNameMsg, companiesPage.CompanyNameMsg);
-                Assert.IsFalse(companiesPage.SaveButtonEnabled);
+                Assert.AreEqual(companyTypeMsg, createCompanyPage.CompanyTypeMsg);
+                Assert.AreEqual(companyNameMsg, createCompanyPage.CompanyNameMsg);
+                Assert.IsFalse(createCompanyPage.SaveButtonEnabled);
             }
             catch (Exception ex)
             {
@@ -207,13 +209,14 @@ namespace InfoTycoon.Test.Example._02.Companies
             #region Arrange
             var loginPage = Pages.Login;
             var companiesPage = Pages.Companies;
+            var createCompanyPage = Pages.CreateCompany;
             #endregion
 
             #region Act
             Browser.GoToPage(loginPage);
             loginPage.SingIn(userName, userPass);
             companiesPage.ClickCreateNewButton();
-            companiesPage.CreateNewCompany(companyName);
+            createCompanyPage.CreateNewCompany(companyName);
             #endregion
 
             #region Assert
@@ -241,6 +244,7 @@ namespace InfoTycoon.Test.Example._02.Companies
             #region Arrange
             var loginPage = Pages.Login;
             var companiesPage = Pages.Companies;
+            var createCompanyPage = Pages.CreateCompany;
             var propertiesPage = Pages.Properties;
             #endregion
 
@@ -248,7 +252,7 @@ namespace InfoTycoon.Test.Example._02.Companies
             Browser.GoToPage(loginPage);
             loginPage.SingIn(userName, userPass);
             companiesPage.ClickCreateNewButton();
-            companiesPage.CreateNewCompany("New " + companyName);
+            createCompanyPage.CreateNewCompany("New " + companyName);
             companiesPage.SearchCompany("New " + companyName);
             companiesPage.SelectCompany("New " + companyName);
             #endregion

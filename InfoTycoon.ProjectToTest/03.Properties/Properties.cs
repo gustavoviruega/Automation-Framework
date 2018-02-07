@@ -2,7 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using System.Collections.Generic;
 using System.Threading;
+using System;
 
 namespace InfoTycoon.ProjectToTest
 {
@@ -44,11 +46,17 @@ namespace InfoTycoon.ProjectToTest
             [FindsBy(How = How.CssSelector, Using = "input[type='text']")]
             private IWebElement txtSearchProperty;
 
-            [FindsBy(How = How.CssSelector, Using = ".input-group-btn")]
+            [FindsBy(How = How.CssSelector, Using = "button[onclick='toggleFilter()'")]
+            private IWebElement btnFilterProperties;
+
+            [FindsBy(How = How.CssSelector, Using = "button[ng-click='search()']")]
             private IWebElement btnSearchProperty;
 
             [FindsBy(How = How.LinkText, Using = "Create New")]
             private IWebElement btnCreateNew;
+
+            [FindsBy(How = How.CssSelector, Using = "tbody")]
+            private IWebElement tblProperties;
 
             [FindsBy(How = How.XPath, Using = "//td[contains(text(),'Gustavo')]")]
             private IWebElement rowCreatedProperty;
@@ -56,9 +64,18 @@ namespace InfoTycoon.ProjectToTest
             [FindsBy(How = How.XPath, Using = "//td[contains(text(),'Automation')]")]
             private IWebElement rowTestingProperty;
 
+            [FindsBy(How = How.CssSelector, Using = "tbody > tr")]
+            private IList<IWebElement> rowsProperties;
+
             [FindsBy(How = How.CssSelector, Using = "td:nth-of-type(2)")]
-            private IWebElement rowSearchResult; 
-            #endregion
+            private IWebElement cellSearchResult;
+
+            [FindsBy(How = How.CssSelector, Using = "#_pendo-close-guide_")]
+            private IWebElement btnClosePendo;
+
+            [FindsBy(How = How.CssSelector, Using = "button.dismiss-button._pendo-guide-next_")]
+            private IWebElement btnGotIt;
+        #endregion
 
         #endregion
 
@@ -71,7 +88,8 @@ namespace InfoTycoon.ProjectToTest
             txtSearchProperty.SendKeys(propname);
             WaitForOverlay();
             WaitForAngular();
-            btnSearchProperty.Click();
+            //btnSearchProperty.Click();
+            WaitFor1RowOnly(rowsProperties);
             WaitForOverlay();
         }
 
@@ -86,28 +104,33 @@ namespace InfoTycoon.ProjectToTest
 
         public void SelectProperty(string propname)
         {
+            ScrollToFooter();
             WaitForElement(btnRegions);
+            Thread.Sleep(1000);
             WaitForOverlay();
             WaitForAngular();
             if (propname.Contains("Automation"))
             {
                 WaitForElement(rowTestingProperty);
                 WaitForOverlay();
+                btnFilterProperties.Click();
                 rowTestingProperty.Click();
             }
             else
             {
                 WaitForElement(rowCreatedProperty);
                 WaitForOverlay();
+                btnFilterProperties.Click();
                 rowCreatedProperty.Click();
             }
         }
+
         #endregion
 
         #region Properties
 
-            #region Header
-            public IWebElement RegionsButton
+        #region Header
+        public IWebElement RegionsButton
             {
                 get
                 {
@@ -116,7 +139,7 @@ namespace InfoTycoon.ProjectToTest
                 }
             }
 
-            public IWebElement ActivityButton
+        public IWebElement ActivityButton
             {
                 get
                 {
@@ -125,7 +148,7 @@ namespace InfoTycoon.ProjectToTest
                 }
             }
 
-            public IWebElement PropertiesButton
+        public IWebElement PropertiesButton
             {
                 get
                 {
@@ -134,7 +157,7 @@ namespace InfoTycoon.ProjectToTest
                 }
             }
 
-            public IWebElement UsersButton
+        public IWebElement UsersButton
             {
                 get
                 {
@@ -143,7 +166,7 @@ namespace InfoTycoon.ProjectToTest
                 }
             }
 
-            public IWebElement CompanyInfoButton
+        public IWebElement CompanyInfoButton
             {
                 get
                 {
@@ -152,7 +175,7 @@ namespace InfoTycoon.ProjectToTest
                 }
             }
 
-            public IWebElement ReportsButton
+        public IWebElement ReportsButton
             {
                 get
                 {
@@ -215,8 +238,8 @@ namespace InfoTycoon.ProjectToTest
         {
             get
             {
-                WaitForElement(rowSearchResult);
-                return rowSearchResult.Text;
+                WaitForElement(cellSearchResult);
+                return cellSearchResult.Text;
             }
         }
         #endregion

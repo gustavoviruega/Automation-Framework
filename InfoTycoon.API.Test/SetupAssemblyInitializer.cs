@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 //-----------To enable integration with TestRail uncomment the lines 42, 92 and 97-----------
 
-namespace InfoTycoon.Test.Example
+namespace InfoTycoon.API.Test
 {
     [TestClass]
     public class SetupAssemblyInitializer
@@ -26,6 +26,8 @@ namespace InfoTycoon.Test.Example
 
         protected string AssertExceptionMessage { get; set; }
 
+        protected string MessageExtended { get; set; }
+
 
         [AssemblyInitialize]
         public static void AssemblyInit(TestContext context)
@@ -38,7 +40,7 @@ namespace InfoTycoon.Test.Example
               {
                   { "suite_id", 7 },
                   { "include_all", false },
-                  { "name", "E2E automated test run " + DateTime.Now.ToString() }
+                  { "name", "API automated tests run " + DateTime.Now.ToString() }
               };
 
             //TestRun = (JObject)client.SendPost("add_run/4", testRunData);
@@ -90,12 +92,12 @@ namespace InfoTycoon.Test.Example
         {
             var testToAdd = new Dictionary<string, object>();
             testToAdd["case_ids"] = ids;
-            var updateRunUrl = "update_run/" + TestRun["id"];
+            var updateRunUrl = "update_run/" + (TestRun["id"] ?? 0);
             //client.SendPost(updateRunUrl, testToAdd);
 
             var testResult = new Dictionary<string, object>();
             testResult["results"] = results;
-            var addResultUrl = "add_results_for_cases/" + TestRun["id"];
+            var addResultUrl = "add_results_for_cases/" + (TestRun["id"] ?? 0);
             //client.SendPost(addResultUrl, testResult);
         }
     }
