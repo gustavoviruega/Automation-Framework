@@ -59,7 +59,7 @@ namespace InfoTycoon.API.Test
 
             #region Arrange
             var client = new RestClient();
-            client.EndPoint = "https://mobilevnext.infotycoon.com/token";
+            client.EndPoint = "https://dev-m.infotycoon.com/token";
             client.Method = HttpVerb.POST;
             client.PostData = "grant_type=password&username=gviruega@velocitypartners.net&password=test_123";
             client.ContentType = "application/x-www-form-urlencoded";
@@ -93,7 +93,7 @@ namespace InfoTycoon.API.Test
 
             #region Arrange
             var client = new RestClient();
-            client.EndPoint = "https://mobilevnext.infotycoon.com/api/Auth/";
+            client.EndPoint = "https://dev-m.infotycoon.com/api/Auth/";
             client.Method = HttpVerb.POST;
             client.PostData = "{'username': 'gviruega@velocitypartners.net', 'password': 'test_123', 'application': 0}";
             #endregion
@@ -126,7 +126,7 @@ namespace InfoTycoon.API.Test
 
             #region Arrange
             var client = new RestClient();
-            client.EndPoint = "https://mobilevnext.infotycoon.com/api/Auth/";
+            client.EndPoint = "https://dev-m.infotycoon.com/api/Auth/";
             client.Method = HttpVerb.DELETE;
             #endregion
 
@@ -157,7 +157,7 @@ namespace InfoTycoon.API.Test
 
             #region Arrange
             var client = new RestClient();
-            client.EndPoint = "https://mobilevnext.infotycoon.com/api/inspectionModule/getfullinspectiondetailv2?inspectionId=" + inspectionID + "&format=array";
+            client.EndPoint = "https://dev-m.infotycoon.com/api/inspectionModule/getfullinspectiondetailv2?inspectionId=" + inspectionID + "&format=array";
             client.Header = "Bearer " + token;
             #endregion
 
@@ -188,7 +188,7 @@ namespace InfoTycoon.API.Test
 
             #region Arrange
             var client = new RestClient();
-            client.EndPoint = @"https://mobilevnext.infotycoon.com/api/v2/sqliteinspection/" + inspectionID;
+            client.EndPoint = @"https://dev-m.infotycoon.com/api/v2/sqliteinspection/" + inspectionID;
             client.Header = "Bearer " + token;
             #endregion
 

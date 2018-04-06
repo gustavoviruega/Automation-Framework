@@ -208,7 +208,7 @@ namespace InfoTycoon.API.Test
         {
             try
             {
-                EndPoint = "https://mobilevnext.infotycoon.com/token";
+                EndPoint = "https://dev-m.infotycoon.com/token";
                 Method = HttpVerb.POST;
                 PostData = "grant_type=password&username=gviruega@velocitypartners.net&password=test_123";
                 ContentType = "application/x-www-form-urlencoded";

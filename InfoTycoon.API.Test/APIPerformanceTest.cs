@@ -68,7 +68,7 @@ namespace InfoTycoon.API.Test
                 foreach (long inspectionID in inspections)
                 {
 
-                    client.EndPoint = String.Format("https://mobilevnext.infotycoon.com/api/inspectionModule/getfullinspectiondetailv2?inspectionId={0}&format=array", inspectionID);
+                    client.EndPoint = String.Format("https://dev-m.infotycoon.com/api/inspectionModule/getfullinspectiondetailv2?inspectionId={0}&format=array", inspectionID);
 
                     Stopwatch sw = new Stopwatch();
                     string response = string.Empty;
@@ -114,7 +114,7 @@ namespace InfoTycoon.API.Test
                 foreach (long inspectionID in inspections)
                 {
 
-                    client.EndPoint = String.Format("https://mobilevnext.infotycoon.com/api/v2/sqliteinspection/{0}", inspectionID);
+                    client.EndPoint = String.Format("https://dev-m.infotycoon.com/api/v2/sqliteinspection/{0}", inspectionID);
 
                     Stopwatch sw = new Stopwatch();
                     string response = string.Empty;
